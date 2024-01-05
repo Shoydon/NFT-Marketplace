@@ -1,0 +1,9 @@
+.card-img{
+    width: auto;
+    height: 300px;
+}
+
+.card{
+    width: 300px;
+    height: auto;
+}

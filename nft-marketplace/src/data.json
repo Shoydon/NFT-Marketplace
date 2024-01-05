@@ -1,0 +1,156 @@
+[
+    {
+        "id": "cryptopunk0",
+        "isSold": false,
+        "price": 100,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk0.jpg"
+    },
+    {
+        "id": "cryptopunk1",
+        "isSold": false,
+        "price": 100,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk1.jpg"
+    },
+    {
+        "id": "cryptopunk2",
+        "isSold": false,
+        "price": 100,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk2.jpg"
+    },
+    {
+        "id": "cryptopunk10",
+        "isSold": false,
+        "price": 100,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk10.jpg"
+    },
+    {
+        "id": "cryptopunk11",
+        "isSold": false,
+        "price": 100,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk11.jpg"
+    },
+    {
+        "id": "cryptopunk14",
+        "isSold": false,
+        "price": 150,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk14.jpg"
+      },
+      {
+        "id": "cryptopunk15",
+        "isSold": false,
+        "price": 80,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk15.jpg"
+      },
+      {
+        "id": "cryptopunk16",
+        "isSold": false,
+        "price": 200,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk16.jpg"
+      },
+      {
+        "id": "cryptopunk17",
+        "isSold": false,
+        "price": 180,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk17.jpg"
+      },
+      {
+        "id": "cryptopunk18",
+        "isSold": false,
+        "price": 90,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk18.jpg"
+      },
+      {
+        "id": "cryptopunk19",
+        "isSold": false,
+        "price": 130,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk19.jpg"
+      },
+      {
+        "id": "cryptopunk20",
+        "isSold": false,
+        "price": 110,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk20.jpg"
+      },
+      {
+        "id": "cryptopunk21",
+        "isSold": false,
+        "price": 170,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk21.jpg"
+      },
+      {
+        "id": "cryptopunk22",
+        "isSold": false,
+        "price": 160,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk22.jpg"
+      },
+      {
+        "id": "cryptopunk23",
+        "isSold": false,
+        "price": 140,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk23.jpg"
+      },
+      {
+        "id": "cryptopunk24",
+        "isSold": false,
+        "price": 250,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk24.jpg"
+      },
+      {
+        "id": "cryptopunk25",
+        "isSold": false,
+        "price": 300,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk25.jpg"
+      },
+      {
+        "id": "cryptopunk100",
+        "isSold": false,
+        "price": 120,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk100.jpg"
+      },
+      {
+        "id": "cryptopunk101",
+        "isSold": false,
+        "price": 150,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk101.jpg"
+      },
+      {
+        "id": "cryptopunk102",
+        "isSold": false,
+        "price": 80,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk102.jpg"
+      },
+      {
+        "id": "cryptopunk103",
+        "isSold": false,
+        "price": 200,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk103.jpg"
+      },
+      {
+        "id": "cryptopunk104",
+        "isSold": false,
+        "price": 180,
+        "isAdded": false,
+        "image": "./nft-images/cryptopunk104.jpg"
+      }
+]
