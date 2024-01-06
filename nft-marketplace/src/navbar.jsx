@@ -1,9 +1,25 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-// import NFTCard from './card';
+// import contractData from './contract.json';
+import Web3 from 'web3';
 
 
 const Navbar = ({ cart, addToCart, totalAmount, handlePayment }) => {
+
+    const web3 = new Web3(window.ethereum);
+    let account = '';
+
+    async function connectWallet() {
+        try {
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            console.log("Wallet connected");
+            const accounts = await web3.eth.getAccounts();
+            account = accounts[0]
+            console.log(account);
+        } catch (error) {
+            console.error("Error connecting wallet:", error);
+        }
+    }
 
     return (
         <nav class="navbar bg-body-tertiary">
@@ -12,6 +28,7 @@ const Navbar = ({ cart, addToCart, totalAmount, handlePayment }) => {
                 <form class="d-flex" role="search">
                     {/* <button class="btn btn-outline-success">Shopping Cart</button> */}
                     {/* <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Shopping cart</button> */}
+                    <button class="btn btn-primary m-2" type="button" onClick={connectWallet}>Connect wallet</button>
                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Shopping Cart</button>
                 </form>
             </div>
@@ -27,11 +44,11 @@ const Navbar = ({ cart, addToCart, totalAmount, handlePayment }) => {
                             !nft.isSold && <NFTCard key={nft.id} nft={nft} addToCart={addToCart} index={index} />
                         ))} */}
                         {cart.map((nft) => (
-                            !nft.isSold && <img src={require(`../src/nft-images/${nft.id}.jpg`)} className = 'card-img-top card-img' alt={nft.name} style={{margin: '5px', borderRadius: '5px'}}/>
+                            !nft.isSold && <img src={require(`../src/nft-images/${nft.id}.jpg`)} className='card-img-top card-img' alt={nft.name} style={{ margin: '5px', borderRadius: '5px' }} />
                         ))}
                     </div>
-                    <p className='text-body-secondary'>Total Amount: {totalAmount} ETH</p>
-                    <button onClick={handlePayment} className='btn btn-info m-2'>Proceed to Payment</button>
+                    <p className='text-body-secondary'>Total Amount: {totalAmount} wei</p>
+                    <button onClick={handlePayment} className='btn btn-primary m-2'>Proceed to Payment</button>
                 </div>
             </div>
 
