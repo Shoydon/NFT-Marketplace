@@ -5,13 +5,12 @@ import { useState } from "react";
 import Navbar from "./navbar";
 import contractData from "./contract.json";
 import Web3 from "web3";
+import { ethers } from "ethers";
+// import { ethers, utils } from "ethers";
+// import { providers, Wallet } from 'ethers';
+
 
 function App() {
-  // const contractAddress = contractData.contractAddress;
-  // const contractABI = contractData.contractABI;
-  // const contractByteCode = contractData.contractByteCode;
-  const web3 = new Web3(window.ethereum);
-  // const contract = new web3.eth.Contract(contractABI, contractAddress);
   // async function connectWallet() {
   //   if (window.ethereum) {
   //     const provider = new providers.Web3Provider(window.ethereum);
@@ -90,51 +89,84 @@ function App() {
   //   }
   // }
 
+  // async function handlePayment() {
+  //   try {
+  //     if (!window.ethereum) {
+  //       alert("Please install MetaMask or another Ethereum wallet");
+  //       return;
+  //     }
+  //     if (!await window.ethereum.isConnected()) {
+  //       await window.ethereum.request({ method: 'eth_requestAccounts' });
+  //     }
+  //     console.log("Wallet connected");
+  //   } catch (error) {
+  //     console.error("Error connecting wallet:", error);
+  //   }
+  //     const accounts = await web3.eth.getAccounts();
+  //     const buyerAddress = accounts[0];
+  //     const {web3} = useDapp()
+  
+  //     const recipientAddress = "0xdF4b182D4b91647e8bC2356971897975C3cC5A0c"; // Replace with your ETH testnet address
+  //     // const amountWei = web3.utils.toWei(totalAmount, "wei"); // Adjust as needed
+  
+  //     // const transaction = {
+  //     //   to: recipientAddress,
+  //     //   value: totalAmount,
+  //     // };
+  
+  //     // const gasLimit = await web3.eth.estimateGas({ ...transaction, from: buyerAddress });
+  
+  //     // const signedTransaction = await web3.eth.accounts.signTransaction(transaction, buyerAddress);
+  //     // const transactionHash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
+  
+  //     // console.log("Transaction hash:", transactionHash);
+  
+  //     try {
+  //       // Monitor transaction status using the web3 provider
+  //       const txReceipt = await web3.eth.waitForTransactionReceipt(transactionHash);
+  //       console.log("Transaction successful:", txReceipt.blockNumber);
+  
+  //       // Clear cart and total amount
+  //       alert(`Payment Successful!`);
+  //       setCart([]);
+  //       setTotalAmount(0);
+  //     } catch (error) {
+  //       console.error("Transaction failed:", error);
+  //       // Handle transaction failure, e.g., display an error message to the user
+  //     }
+  //   }
+
   async function handlePayment() {
-    try {
-      if (!window.ethereum) {
-        alert("Please install MetaMask or another Ethereum wallet");
-        return;
+    try{
+      if(!window.ethereum){
+        alert("Install metamask")
       }
-      if (!await window.ethereum.isConnected()) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-      }
-      console.log("Wallet connected");
-    } catch (error) {
-      console.error("Error connecting wallet:", error);
-    }
-      const accounts = await web3.eth.getAccounts();
-      const buyerAddress = accounts[0];
-  
-      const recipientAddress = contractData.owner; // Replace with your ETH testnet address
-      // const amountWei = web3.utils.toWei(totalAmount, "wei"); // Adjust as needed
-  
-      const transaction = {
-        to: recipientAddress,
-        value: totalAmount,
-      };
-  
-      // const gasLimit = await web3.eth.estimateGas({ ...transaction, from: buyerAddress });
-  
-      const signedTransaction = await web3.eth.accounts.signTransaction(transaction, buyerAddress);
-      const transactionHash = await web3.eth.sendSignedTransaction(signedTransaction.rawTransaction);
-  
-      console.log("Transaction hash:", transactionHash);
-  
-      try {
-        // Monitor transaction status using the web3 provider
-        const txReceipt = await web3.eth.waitForTransactionReceipt(transactionHash);
-        console.log("Transaction successful:", txReceipt.blockNumber);
-  
-        // Clear cart and total amount
-        alert(`Payment Successful!`);
+      await window.ethereum.request({method: 'eth_requestAccounts'});
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = provider.getSigner();
+      console.log((await signer).address);
+      const contractAddress = contractData.contractAddress;
+      const contractABI = contractData.contractABI;
+      // const contractByteCode = contractData.contractByteCode;
+      // const web3 = new Web3(window.ethereum);
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+
+      // const recipientAddress = "0xdF4b182D4b91647e8bC2356971897975C3cC5A0c";
+
+      const res = await contract.connect(signer).pay(totalAmount).then(() => {
+        console.log(res);
+      })
+
+        for (let i = 0; i < cart.length; i++) {
+                NFTs[cart[i].index].isSold = true;
+                // console.log(cart[i].index);
+              }
         setCart([]);
         setTotalAmount(0);
-      } catch (error) {
-        console.error("Transaction failed:", error);
-        // Handle transaction failure, e.g., display an error message to the user
-      }
+    } catch(error){
+      console.log(error);
     }
+  }
 
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
