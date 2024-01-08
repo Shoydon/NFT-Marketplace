@@ -2,24 +2,55 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 // import contractData from './contract.json';
 import Web3 from 'web3';
+// import { detectEthereumProvider } from '@metamask/detect-provider';
+import { useState } from 'react';
 
+const Navbar = ({ cart, totalAmount, handlePayment }) => {
 
-const Navbar = ({ cart, addToCart, totalAmount, handlePayment }) => {
-
-    const web3 = new Web3(window.ethereum);
-    let account = '';
-
+    const [account, setAccount] = useState([]);
+    // const [connected, setConnected] = useState([]);
+    // const [provider, setProvider] = useState([]);
+    let connectedAccount;
+    
     async function connectWallet() {
         try {
-            await window.ethereum.request({ method: 'eth_requestAccounts' });
-            console.log("Wallet connected");
-            const accounts = await web3.eth.getAccounts();
-            account = accounts[0]
-            console.log(account);
+            if (window.ethereum) {
+                const web3 = new Web3(window.ethereum);
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                console.log("Wallet connected");
+                const accounts = await web3.eth.getAccounts()
+                setAccount(accounts[0]);
+                connectedAccount = accounts[0];
+                console.log(connectedAccount);
+                console.log(account);
+            }
         } catch (error) {
             console.error("Error connecting wallet:", error);
         }
     }
+    // async function connectWallet() {
+    //     setProvider(await detectEthereumProvider());
+    //     if(!provider){
+    //         console.error("please install metamask");
+    //         alert("Please Install Metamask");
+    //         return;
+    //     }
+
+    //     const web3 = new Web3(provider);
+    //     try {
+    //         await provider.request({ method: "wallet_switchEthereumChain", params: [{chainId: '0x43' }] });
+    //     } catch (e){
+    //         console.error("Couldnt switch to Sepolia: ", e);
+    //         alert("Couldnt switch to Sepolia");
+    //         return;
+    //     }
+    //     const chainId = await web3.eth.getChainId();
+    //     if (chainId !== '0x43') {
+    //         console.error('Not connected to Sepolia');
+    //         alert('Not connected to Sepolia');
+    //         return;
+    //     }
+    // }
 
     return (
         <nav class="navbar bg-body-tertiary">
@@ -48,6 +79,7 @@ const Navbar = ({ cart, addToCart, totalAmount, handlePayment }) => {
                         ))}
                     </div>
                     <p className='text-body-secondary'>Total Amount: {totalAmount} wei</p>
+                    {/* {connected && <button onClick={handlePayment} className='btn btn-primary m-2'>Proceed to Payment</button>} */}
                     <button onClick={handlePayment} className='btn btn-primary m-2'>Proceed to Payment</button>
                 </div>
             </div>
