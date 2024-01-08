@@ -7,10 +7,14 @@ import { useState } from 'react';
 
 const Navbar = ({ cart, totalAmount, handlePayment }) => {
 
-    const [account, setAccount] = useState([]);
+    // let [account, setAccount] = useState();
     // const [connected, setConnected] = useState([]);
     // const [provider, setProvider] = useState([]);
     let connectedAccount;
+    const handleAppendTrxn = ({trxnHash, trxnURL}) => {
+        const newTrxn = {trxnHash, trxnURL}
+        setPastTrxns([...pastTrxns, newTrxn]);
+    }
     
     async function connectWallet() {
         try {
@@ -19,15 +23,16 @@ const Navbar = ({ cart, totalAmount, handlePayment }) => {
                 await window.ethereum.request({ method: 'eth_requestAccounts' });
                 console.log("Wallet connected");
                 const accounts = await web3.eth.getAccounts()
-                setAccount(accounts[0]);
+                // setAccount(accounts[0]);
                 connectedAccount = accounts[0];
                 console.log(connectedAccount);
-                console.log(account);
+                // console.log(account);
             }
         } catch (error) {
             console.error("Error connecting wallet:", error);
         }
     }
+
     // async function connectWallet() {
     //     setProvider(await detectEthereumProvider());
     //     if(!provider){
@@ -51,6 +56,8 @@ const Navbar = ({ cart, totalAmount, handlePayment }) => {
     //         return;
     //     }
     // }
+
+    const [pastTrxns, setPastTrxns] = useState([]);
 
     return (
         <nav class="navbar bg-body-tertiary">
@@ -81,6 +88,13 @@ const Navbar = ({ cart, totalAmount, handlePayment }) => {
                     <p className='text-body-secondary'>Total Amount: {totalAmount} wei</p>
                     {/* {connected && <button onClick={handlePayment} className='btn btn-primary m-2'>Proceed to Payment</button>} */}
                     <button onClick={handlePayment} className='btn btn-primary m-2'>Proceed to Payment</button>
+                    <hr></hr>
+                    <div className="past-trxns">
+                        <h3>Past Transactions</h3>
+                        {pastTrxns.map((trxn) => (
+                            <p>Transaction Hash: {trxn}</p>
+                        ))}
+                    </div>
                 </div>
             </div>
 

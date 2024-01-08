@@ -5,6 +5,7 @@ import { useState } from "react";
 import Navbar from "./navbar";
 import contractData from "./contract.json";
 import Web3 from "web3";
+import handleAppendTrxn from './navbar'
 // import provider from "./navbar";
 // import connectedAccount from './navbar';
 // import { Transaction, ethers } from "ethers";
@@ -172,7 +173,7 @@ function App() {
   };
 
   const handlePayment = async () => {
-    if (totalAmount == 0) {
+    if (totalAmount === 0) {
       alert("Your cart can't be empty");
       return
     }
@@ -192,7 +193,7 @@ function App() {
     const receiverAddress = contractData.owner;
     // const web3 = new Web3(provider);
     const web3 = new Web3(window.ethereum);
-    console.log("connected Account: ", connectedAccount);
+    console.log("Connected Account: ", connectedAccount);
     console.log("Receiver: ", receiverAddress);
     console.log("Total Amount: ", totalAmount);
     try {
@@ -203,13 +204,21 @@ function App() {
         gas: "30000",
       };
       const trxn = await web3.eth.sendTransaction(trxnObj);
-      console.log("Transaction send.\n Hash: ", trxn.transactionHash);
+      const trxnHash = trxn.transactionHash;
+      console.log("Transaction sent.\n Hash: ", trxnHash);
       for (let i = 0; i < cart.length; i++) {
         NFTs[cart[i].index].isSold = true;
       }
       alert("Transaction successful!")
       setCart([]);
       setTotalAmount(0);
+      const trxnURL = `https://sepolia.etherscan.io/tx/${trxnHash}`;
+      handleAppendTrxn(trxnHash, trxnURL);
+      // alert(() => {
+      //   return (
+      //     <a href = {`https://sepolia.etherscan.io/tx/${trxnHash}`}>Transaction on etherscan</a>
+      //   )
+      // })
     } catch (e) {
       console.log(e);
     }

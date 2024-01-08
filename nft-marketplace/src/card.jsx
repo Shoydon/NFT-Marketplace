@@ -20,7 +20,7 @@ const NFTCard = ({ nft, addToCart, index }) => {
             <div className="card-body">
                 <h5 className='card-title'>{nft.id}</h5>
                 <p className='card-text'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, sunt.</p>
-                <p className='card-text'>Price: {nft.price} ETH</p>
+                <p className='card-text'>Price: {nft.price} wei</p>
                 {!nft.isAdded && <button onClick={handleAddToCart} className='btn btn-primary'>Add to Cart</button>}
             </div>
         </div>
