@@ -5,7 +5,7 @@ import { useState } from "react";
 import Navbar from "./navbar";
 import contractData from "./contract.json";
 import Web3 from "web3";
-import handleAppendTrxn from './navbar'
+import handleAppendTrxn from "./navbar";
 // import provider from "./navbar";
 // import connectedAccount from './navbar';
 // import { Transaction, ethers } from "ethers";
@@ -175,7 +175,7 @@ function App() {
   const handlePayment = async () => {
     if (totalAmount === 0) {
       alert("Your cart can't be empty");
-      return
+      return;
     }
     let connectedAccount;
     try {
@@ -209,33 +209,30 @@ function App() {
       for (let i = 0; i < cart.length; i++) {
         NFTs[cart[i].index].isSold = true;
       }
-      alert("Transaction successful!")
+      alert("Transaction successful!");
       setCart([]);
       setTotalAmount(0);
       const trxnURL = `https://sepolia.etherscan.io/tx/${trxnHash}`;
-      handleAppendTrxn(trxnHash, trxnURL);
-      // alert(() => {
-      //   return (
-      //     <a href = {`https://sepolia.etherscan.io/tx/${trxnHash}`}>Transaction on etherscan</a>
-      //   )
-      // })
+      const newTrxn = { trxnHash, trxnURL };
+      let transactions = [...pastTrxns, newTrxn]
+      setPastTrxns(transactions)
     } catch (e) {
       console.log(e);
     }
   };
-
+  
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [pastTrxns, setPastTrxns] = useState([]);
 
-  // console.log(NFTs);
 
   return (
     <div className="nft-marketplace">
-      {/* <h1>NFT Marketplace</h1> */}
       <Navbar
         cart={cart}
         totalAmount={totalAmount}
         handlePayment={handlePayment}
+        pastTrxns={pastTrxns}
       />
       <div className="nft-list">
         {NFTs.map(
