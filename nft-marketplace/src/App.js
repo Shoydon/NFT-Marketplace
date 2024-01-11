@@ -5,7 +5,7 @@ import { useState } from "react";
 import Navbar from "./navbar";
 import contractData from "./contract.json";
 import Web3 from "web3";
-import handleAppendTrxn from "./navbar";
+// import handleAppendTrxn from "./navbar";
 // import provider from "./navbar";
 // import connectedAccount from './navbar';
 // import { Transaction, ethers } from "ethers";
