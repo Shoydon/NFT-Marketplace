@@ -1,9 +1,21 @@
 .nft-marketplace{
-    margin-left: 10px;
-  }
-  
-  .nft-list, .cart-list{
-    border: 10px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+  margin-left: 10px;
+}
+
+.nft-list, .cart-list{
+  border: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.no-nfts{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-nfts-h1{
+  opacity: 0.5;
+}

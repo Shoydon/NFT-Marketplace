@@ -1,12 +1,7 @@
-import Navbar from "../components/navbar";
 import NFTCard from "../components/card";
-import NFTs from "../data.json";
-import { useState } from "react";
-import contractData from "../contract.json";
-import Web3 from "web3";
 import './home.css'
 
-const Home = ({ addToCart, cart, setCart}) => {
+const Home = ({ addToCart, cart, setCart, nfts }) => {
 
     // const addToCart = (nft, index) => {
     //     nft.index = index;
@@ -62,13 +57,16 @@ const Home = ({ addToCart, cart, setCart}) => {
     //     }
     //   };
 
-      const removeFromCart = ({nft}) => {
-        setCart(cart.filter())
-      }
+      // const removeFromCart = ({nft}) => {
+      //   for (let i = 0; i < cart.length; i++) {
+      //     setCart(cart.filter(nft => nft.nftUrl !== cart[i].nftUrl))          
+      //   }
+      // }
       
     //   const [cart, setCart] = useState([]);
     //   const [totalAmount, setTotalAmount] = useState(0);
     //   const [pastTrxns, setPastTrxns] = useState([]);
+
  
     return(
         <div>
@@ -79,7 +77,7 @@ const Home = ({ addToCart, cart, setCart}) => {
               pastTrxns={pastTrxns}
             /> */}
             <div className="nft-list">
-              {NFTs.map(
+              {nfts.length ? nfts.map(
                 (nft, index) =>
                   !nft.isSold && (
                     <NFTCard
@@ -87,10 +85,10 @@ const Home = ({ addToCart, cart, setCart}) => {
                       nft={nft}
                       addToCart={addToCart}
                       index={index}
-                      removeFromCart={removeFromCart}
+                      // removeFromCart={removeFromCart}
                     />
                   )
-              )}
+              ) : <div className="no-nfts"><h1 className="no-nfts-h1">No more NFTs to display</h1> </div>}
             </div>
         </div>
     )

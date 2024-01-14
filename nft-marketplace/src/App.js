@@ -1,7 +1,7 @@
 import "./App.css";
 // import NFTCard from "./components/card";
 import NFTs from "./data.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import contractData from "./contract.json";
 import Web3 from "web3";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -10,10 +10,11 @@ import MintForm from "./pages/mintNFT";
 import Navbar from "./components/navbar";
 
 function App() {
+
   const addToCart = (nft, index) => {
     nft.index = index;
     setCart([...cart, nft]);
-    setTotalAmount(totalAmount + nft.price);
+    setTotalAmount(totalAmount + nft.nftPrice);
   };
 
   const handlePayment = async () => {
@@ -26,19 +27,19 @@ function App() {
       if (window.ethereum) {
         const web3 = new Web3(window.ethereum);
         await window.ethereum.request({ method: "eth_requestAccounts" });
-        console.log("Wallet connected");
+        // console.log("Wallet connected");
         const accounts = await web3.eth.getAccounts();
         connectedAccount = accounts[0];
-        console.log(connectedAccount);
+        // console.log(connectedAccount);
       }
     } catch (error) {
       console.error("Error connecting wallet:", error);
     }
     const receiverAddress = contractData.owner;
     const web3 = new Web3(window.ethereum);
-    console.log("Connected Account: ", connectedAccount);
-    console.log("Receiver: ", receiverAddress);
-    console.log("Total Amount: ", totalAmount);
+    // console.log("Connected Account: ", connectedAccount);
+    // console.log("Receiver: ", receiverAddress);
+    // console.log("Total Amount: ", totalAmount);
     try {
       const trxnObj = {
         from: connectedAccount,
@@ -46,13 +47,16 @@ function App() {
         value: totalAmount,
         gas: "30000",
       };
+      const start = performance.now();
+      console.log("Initiating transaction...");
       const trxn = await web3.eth.sendTransaction(trxnObj);
+      const end = performance.now();
+      alert(`Transaction successful!. Time taken to execute transaction: ${end-start}`);
       const trxnHash = trxn.transactionHash;
       console.log("Transaction sent.\n Hash: ", trxnHash);
       for (let i = 0; i < cart.length; i++) {
-        NFTs[cart[i].index].isSold = true;
+        setNfts(nfts.filter(nft => nft.nftUrl !== cart[i].nftUrl));
       }
-      alert("Transaction successful!");
       setCart([]);
       setTotalAmount(0);
       const trxnURL = `https://sepolia.etherscan.io/tx/${trxnHash}`;
@@ -67,6 +71,9 @@ function App() {
   const [cart, setCart] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [pastTrxns, setPastTrxns] = useState([]);
+  const [nfts, setNfts] = useState([]);
+
+  // useEffect(() => {console.log(nfts);}, [nfts]);
 
   return (
     <BrowserRouter>
@@ -76,10 +83,11 @@ function App() {
         handlePayment={handlePayment}
         pastTrxns={pastTrxns}
       />
+      <hr/>
       <Routes>
-        <Route index element={<Home addToCart={addToCart}/>}></Route>
+        <Route index element={<Home addToCart={addToCart} nfts={nfts}/>}></Route>
         {/* <Route index element={<Home addToCart={addToCart} cart={cart} setCart={setCart}/>}></Route> */}
-        <Route path="mintNFT" element={<MintForm />}></Route>
+        <Route path="mintNFT" element={<MintForm nfts={nfts} setNfts={setNfts}/>}></Route>
       </Routes>
     </BrowserRouter>
 

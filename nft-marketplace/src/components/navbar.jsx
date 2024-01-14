@@ -14,7 +14,7 @@ const Navbar = ({ cart, totalAmount, handlePayment, pastTrxns }) => {
             if (window.ethereum) {
                 const web3 = new Web3(window.ethereum);
                 await window.ethereum.request({ method: 'eth_requestAccounts' });
-                console.log("Wallet connected");
+                // console.log("Wallet connected");
                 const accounts = await web3.eth.getAccounts()
                 // setAccount(accounts[0]);
                 connectedAccount = accounts[0];
@@ -54,7 +54,7 @@ const Navbar = ({ cart, totalAmount, handlePayment, pastTrxns }) => {
                 <div className="offcanvas-body">
                     <div className="cart-list">
                         {cart.map((nft) => (
-                            !nft.isSold && <img src={require(`../nft-images/${nft.id}.jpg`)} className='card-img-top card-img' alt={nft.name} style={{ margin: '5px', borderRadius: '5px' }} />
+                            !nft.isSold && <img src={nft.nftUrl} className='card-img-top card-img' alt={nft.name} style={{ margin: '5px', borderRadius: '5px' }} />
                         ))}
                     </div>
                     <p className='text-body-secondary'>Total Amount: {totalAmount} wei</p>
